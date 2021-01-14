@@ -1,22 +1,105 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://zye1996.github.io</id>
-    <title>Magnetic Field</title>
-    <updated>2021-01-14T04:43:07.891Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://zye1996.github.io"/>
-    <link rel="self" href="https://zye1996.github.io/atom.xml"/>
-    <subtitle>γνῶθι σεαυτόν ｜ 认识你自己</subtitle>
-    <logo>https://zye1996.github.io/images/avatar.png</logo>
-    <icon>https://zye1996.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Magnetic Field</rights>
-    <entry>
-        <title type="html"><![CDATA[3D目标识别论文-3DSSD]]></title>
-        <id>https://zye1996.github.io/post/3d-mu-biao-shi-bie-lun-wen-3dssd/</id>
-        <link href="https://zye1996.github.io/post/3d-mu-biao-shi-bie-lun-wen-3dssd/">
-        </link>
-        <updated>2021-01-09T01:15:30.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="导言">导言</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>3D目标识别论文-3DSSD | Magnetic Field</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zye1996.github.io/favicon.ico?v=1610599371058">
+<link rel="stylesheet" href="https://zye1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="导言
+最近在学习一些基于激光雷达数据的3D目标识别算法，于是就写一些学习笔记希望能帮助到同样有兴趣的各位。
+3DSSD是发布在2020 CVPR上的作品，采用了基于点云的预测方法，使用原始点云数据进行特征提取并做proposal。对于类似的..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zye1996.github.io">
+        <img src="https://zye1996.github.io/images/avatar.png?v=1610599371058" class="site-logo">
+        <h1 class="site-title">Magnetic Field</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            Home
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            Achives
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            Topics
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            About
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      γνῶθι σεαυτόν ｜ 认识你自己
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zye1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">3D目标识别论文-3DSSD</h2>
+            <div class="post-date">2021-01-08</div>
+            
+              <div class="feature-container" style="background-image: url('https://zye1996.github.io/post-images/3d-mu-biao-shi-bie-lun-wen-3dssd.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="导言">导言</h2>
 <p>最近在学习一些基于激光雷达数据的3D目标识别算法，于是就写一些学习笔记希望能帮助到同样有兴趣的各位。</p>
 <p>3DSSD是发布在2020 CVPR上的作品，采用了基于<font color=red><strong>点云</strong></font>的预测方法，使用原始点云数据进行特征提取并做proposal。对于类似的方法，模型的结构往往借鉴PointNet++的框架：点云数据-&gt;骨干网络特征提取-&gt;上采样插值-&gt;检测头输出预测。3DSSD为了取消费时的上采样插值部分，提出了新的<font color=red><strong>F-FPS和Fusion Sampling</strong></font>作为补偿。</p>
 <p>在PointNet++的特征提取模块中，数据经历了三个步骤：</p>
@@ -78,6 +161,37 @@
 mmdetection3d有一个成功的复现：<a href="https://github.com/open-mmlab/mmdetection3d">mmdetection3d框架</a></p>
 <h2 id="建议阅读">建议阅读</h2>
 <p>对于骨干网络的其他部分，尤其是对vote机制，可以参照VoteNet的实现，几乎一样。</p>
-]]></content>
-    </entry>
-</feed>
+
+            </div>
+            
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
