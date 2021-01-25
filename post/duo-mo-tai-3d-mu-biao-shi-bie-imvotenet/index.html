@@ -1,22 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://zye1996.github.io</id>
-    <title>Magnetic Field</title>
-    <updated>2021-01-25T04:22:47.521Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://zye1996.github.io"/>
-    <link rel="self" href="https://zye1996.github.io/atom.xml"/>
-    <subtitle>γνῶθι σεαυτόν ｜ 认识你自己</subtitle>
-    <logo>https://zye1996.github.io/images/avatar.png</logo>
-    <icon>https://zye1996.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Magnetic Field</rights>
-    <entry>
-        <title type="html"><![CDATA[多模态3D目标识别论文-imVoteNet]]></title>
-        <id>https://zye1996.github.io/post/duo-mo-tai-3d-mu-biao-shi-bie-imvotenet/</id>
-        <link href="https://zye1996.github.io/post/duo-mo-tai-3d-mu-biao-shi-bie-imvotenet/">
-        </link>
-        <updated>2021-01-14T18:18:17.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="导言">导言</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>多模态3D目标识别论文-imVoteNet | Magnetic Field</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zye1996.github.io/favicon.ico?v=1611548536651">
+<link rel="stylesheet" href="https://zye1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="导言
+多模态3D目标识别任务常常要融合Image相片信息和Lidar点云数据，以此来为单纯依赖点云的方法添加相片中的材质纹理和颜色特征。imVoteNet是今年CVPR2020上发布的论文，主要思想在于使用成熟的2D目标检测器辅助3D检测器..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zye1996.github.io">
+        <img src="https://zye1996.github.io/images/avatar.png?v=1611548536651" class="site-logo">
+        <h1 class="site-title">Magnetic Field</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            Home
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            Achives
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            Topics
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            About
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      γνῶθι σεαυτόν ｜ 认识你自己
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zye1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">多模态3D目标识别论文-imVoteNet</h2>
+            <div class="post-date">2021-01-14</div>
+            
+              <div class="feature-container" style="background-image: url('https://zye1996.github.io/post-images/duo-mo-tai-3d-mu-biao-shi-bie-imvotenet.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="导言">导言</h2>
 <p>多模态3D目标识别任务常常要融合Image相片信息和Lidar点云数据，以此来为单纯依赖点云的方法添加相片中的材质纹理和颜色特征。imVoteNet是今年CVPR2020上发布的论文，主要思想在于<span style="color:red">使用成熟的2D目标检测器辅助3D检测器propose检测框</span>，以此来缩小3D检测器的搜索范围。</p>
 <p>我觉得可以借鉴的点有：</p>
 <ul>
@@ -122,76 +204,46 @@ c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></spa
 <a href="https://github.com/facebookresearch/imvotenet">imvotenet源码</a><br>
 同时，mmdetection3D框架上有老哥放出了不带Multi-tower的pull request：<br>
 <a href="https://github.com/THU17cyz/mmdetection3d/tree/imvotenet">mmdetection3d的imvotenet pull request</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[3D目标识别论文-3DSSD]]></title>
-        <id>https://zye1996.github.io/post/3d-mu-biao-shi-bie-lun-wen-3dssd/</id>
-        <link href="https://zye1996.github.io/post/3d-mu-biao-shi-bie-lun-wen-3dssd/">
-        </link>
-        <updated>2021-01-09T01:15:30.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="导言">导言</h2>
-<p>最近在学习一些基于激光雷达数据的3D目标识别算法，于是就写一些学习笔记希望能帮助到同样有兴趣的各位。</p>
-<p>3DSSD是发布在2020 CVPR上的作品，采用了基于<font color=red><strong>点云</strong></font>的预测方法，使用原始点云数据进行特征提取并做proposal。对于类似的方法，模型的结构往往借鉴PointNet++的框架：点云数据-&gt;骨干网络特征提取-&gt;上采样插值-&gt;检测头输出预测。3DSSD为了取消费时的上采样插值部分，提出了新的<font color=red><strong>F-FPS和Fusion Sampling</strong></font>作为补偿。</p>
-<p>在PointNet++的特征提取模块中，数据经历了三个步骤：</p>
-<ul>
-<li>点采样 （Point Sampling）
-<ul>
-<li>因为点云数据过多，需要使用 Furthest Point Samping （FPS）对所有点进行下采样</li>
-</ul>
-</li>
-<li>分组 （Point Grouping）
-<ul>
-<li>将采样过后得到的点作为中心点，以这些点为中心，将采样前所有特征点使用KNN或者Ball Query的方法分配到各个中心点所处的空间内</li>
-</ul>
-</li>
-<li>特征聚合 （Feature Aggregation）
-<ul>
-<li>将每一个空间点内的特征点的特征以一定方式聚合到中心点上，这样中心点就包含了组内所有点的特征。</li>
-</ul>
-</li>
-</ul>
-<h2 id="主要改进">主要改进</h2>
-<h3 id="f-fps-采样方法">F-FPS 采样方法</h3>
-<p>在骨干网络提取特征时，随着网络加深需要使用FPS方法下采样坐标点，常规的做法是根据点的空间坐标来下采样（distance-FPS），<font color=blue>即假设采样空间坐标差异大的点有助于保留整体点云的信息</font>，本论文中提出了feature-FPS的方法，使用每一层获得的点的特征来下采样，<font color=red>即假设保留特征差异大的点有助于体现整体点云信息。</font></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"><img src="https://zye1996.github.io/post-images/1610595422669.png" alt="骨干网络示意图" width="500" loading="lazy"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><em>骨干网络示意图</em></td>
-</tr>
-</tbody>
-</table>
-<p>实验证明feature-FPS有助于保留前景点，提高采样的recall（即能采样到更多在目标内的点）。但是仅使用feature-FPS会造成很多点被认作false positve而导致objectness分类准确率降低（我的理解是会造成样本数量不平衡），因此文章又提出了Fusion Sampling的策略，即每次采样时用feature-FPS采样一定数量的点，另外的点用distance-FPS采样。</p>
-<p>需要注意的是，在连续两个采用 Fusion Sampling 策略的特征提取模块堆叠时，第二个feature-FPS只会从之前feature-FPS获得的点中采样，对distance-FPS也是如此（如上图）。</p>
-<h3 id="anchor-free-检测头">Anchor-free 检测头</h3>
-<p>网络为了更加轻量化，使用了anchor-free的预测生成策略，对于每一个seed点（voting之后的特征和坐标），直接对其回归一个表征预测框的向量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>d</mi><mi>x</mi></msub><mo separator="true">,</mo><msub><mi>d</mi><mi>y</mi></msub><mo separator="true">,</mo><msub><mi>d</mi><mi>z</mi></msub><mo separator="true">,</mo><msub><mi>d</mi><mi>l</mi></msub><mo separator="true">,</mo><msub><mi>d</mi><mi>w</mi></msub><mo separator="true">,</mo><msub><mi>d</mi><mi>h</mi></msub><mo separator="true">,</mo><mi>a</mi><mi>n</mi><msub><mi>g</mi><mrow><mi>c</mi><mi>l</mi><mi>s</mi></mrow></msub><mo separator="true">,</mo><mi>a</mi><mi>n</mi><msub><mi>g</mi><mrow><mi>r</mi><mi>e</mi><mi>s</mi></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(d_x, d_y, d_z, d_l, d_w, d_h, ang_{cls}, ang_{res})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.036108em;vertical-align:-0.286108em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">y</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.04398em;">z</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02691em;">w</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">h</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">e</span><span class="mord mathdefault mtight">s</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，包含了该点对真实目标框中心的位移，长宽高的偏移，角度的bin类别和相对该bin的位移（角度被分为12个bin，每个bin为30度）。<br>
-除此之外当然还会对目标的类别进行预测，区别是在生成类别真实值的标签时，我们不仅会对点所属的类进行监督（即在一个one-hot类别向量上哪一个维度非零），<font color=red>还会对点靠近中心的程度进行监督</font>，即在点所属的类别的维度上用以下结果代替1：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"><img src="https://zye1996.github.io/post-images/1610598130493.png" alt="centerness" width="250" loading="lazy"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><em>centerness标签计算</em></td>
-</tr>
-</tbody>
-</table>
-<p>在计算loss时，我们使用huber loss（smoothL1）计算各个偏移量的loss；paper中写到对点的类别使用了cross entropy，在实现中其实是一个binary cross entropy:</p>
-<pre><code>cls_loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=gt_cls, logits=pred_cls)
-</code></pre>
-<h2 id="代码实现">代码实现</h2>
-<p>官方代码使用tensorflow实现，应该是参考了PointNet++的实现：<a href="https://github.com/Jia-Research-Lab/3DSSD">官方TF1实现</a><br>
-还有一个用pytorch的复现，<font color=red>小心使用，很多问题，我在自己fork的repo修复了一部分，目前还没完成</font>：<a href="https://github.com/qiqihaer/3DSSD-pytorch">pytorch复现</a><br>
-mmdetection3d有一个成功的复现：<a href="https://github.com/open-mmlab/mmdetection3d">mmdetection3d框架</a></p>
-<h2 id="建议阅读">建议阅读</h2>
-<p>对于骨干网络的其他部分，尤其是对vote机制，可以参照VoteNet的实现，几乎一样。</p>
-]]></content>
-    </entry>
-</feed>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zye1996.github.io/post/3d-mu-biao-shi-bie-lun-wen-3dssd/">
+                  <h3 class="post-title">
+                    3D目标识别论文-3DSSD
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
