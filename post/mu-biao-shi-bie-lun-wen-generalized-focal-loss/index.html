@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>目标识别论文-Generalized Focal Loss | Magnetic Field</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://zye1996.github.io/favicon.ico?v=1619035056678">
+<link rel="stylesheet" href="https://zye1996.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="导言
+Generalized Focal Loss (GFL) 是一种通过调整框本身和框质量（好坏）估计的表示，来提高模型学习效果的技术。最近这个方法也推出了v2的版本，这种思路总体上会比较轻量，不会给模型本身带来很多的overhead，非..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://zye1996.github.io">
+        <img src="https://zye1996.github.io/images/avatar.png?v=1619035056678" class="site-logo">
+        <h1 class="site-title">Magnetic Field</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            Home
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            Achives
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            Topics
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            About
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      γνῶθι σεαυτόν ｜ 认识你自己
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://zye1996.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">目标识别论文-Generalized Focal Loss</h2>
+            <div class="post-date">2021-04-19</div>
+            
+            <div class="post-content" v-pre>
+              <h2 id="导言">导言</h2>
+<p>Generalized Focal Loss (GFL) 是一种通过<strong>调整框本身和框质量（好坏）估计的表示，来提高模型学习效果</strong>的技术。最近这个方法也推出了v2的版本，这种思路总体上会比较轻量，不会给模型本身带来很多的overhead，非常不错。</p>
+<h2 id="motivation">Motivation</h2>
+<p>GFL要解决的问题主要有两个：</p>
+<ul>
+<li><strong>分类分支和框质量分支在训练时不一致，在测试时却需要共同决定框表示</strong>。对于先前的很多anchor-free检测器来说，除了对特征图中每个像素对应的检测框回归外，还需要用一个额外分支回归框的质量（centerness或者gIOU），最后使用NMS参考这个质量值去掉那些不好的检测框（偏离中心的框）。这个分支在训练时是单独训练的，如下图FOS的模型结构中最右侧的center-ness分支，在预测时却是和分类分支得到的信度相乘得到最终预测框的信度。<br>
+<img src="https://zye1996.github.io/post-images/1619031795741.png" alt="" loading="lazy"></li>
+<li><strong>传统的框表示太过于strict，可能对于模棱两可的边界不够友好</strong>。先前的方法都对像素点到边界的距离回归，这些距离都是hard-coded的，不存在随机性；从概率的角度说就是这些回归对象满足狄拉克分布（只在hard-coded的完全正确值上有概率）。</li>
+</ul>
+<h2 id="解决方法">解决方法</h2>
+<figure data-type="image" tabindex="1"><img src="https://zye1996.github.io/post-images/1619033322838.png" alt="" loading="lazy"></figure>
+<h3 id="解决问题1">解决问题1:</h3>
+<p>为了让分类分支和框质量分支在训练测试时一致，所以文章就想办法整合他们一起训练。具体的方法是在搭label的时候使用框质量作为正确类别one-hot encoding上的值。此时这个值位0～1之间的浮点数，如此一来传统的focal loss也不能使用了，于是改为这个叫Quality Focal Loss的这个损失函数：<br>
+<img src="https://zye1996.github.io/post-images/1619032831668.png" alt="" loading="lazy"><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 为框质量的目标值，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>σ</mi></mrow><annotation encoding="application/x-tex">\sigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">σ</span></span></span></span>为正确类别的框质量预测值。</p>
+<h3 id="解决问题2">解决问题2:</h3>
+<p>既然框的表示使用狄拉克分布太strict，于是作者就尝试用一个general的分布来对框表示建模，即<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">P(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>，每个距离值y都有一定的概率取到，最后像素到框四个边的距离由这个分布的积分得出。具体的，对像素到每一边的距离，最后预测的是一个n维向量（四个边就是4n维），每一个维度都代表预测值取得可行域中某一个值的概率。因为是概率分布，每个n维向量的值加和都要等于1（用softmax处理即可）。同时加入了一个新的loss函数来对学习分布进行监督，称作Ditribution Focal Loss:<br>
+<img src="https://zye1996.github.io/post-images/1619033700466.png" alt="" loading="lazy"><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>为目标值，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">y_{i+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span> 和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>为最靠近<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>的两个边界，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">S_{i+1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.891661em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>分别为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">S_{i}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>这两个值所表示的概率。总的来说这个loss的目的是提高取得目标值的概率。</p>
+<h3 id="以上两个方法的通解">以上两个方法的通解</h3>
+<p>以上两个问题的解决方法可以写为通用的形式，也就是GFL：<br>
+<img src="https://zye1996.github.io/post-images/1619034869894.png" alt="" loading="lazy"></p>
+<h2 id="v2版本改进">V2版本改进</h2>
+<p>实验证明学习到的框的边界分布和框的质量有很大的关系，如果一个框的边界越明确，那么对应的分布肯定很集中，这样的检测框的质量也会高一些。作者在v2版本中尝试使用框的边界分布取指导框质量的回归。<br>
+<img src="https://zye1996.github.io/post-images/1619034356277.png" alt="" loading="lazy"><br>
+具体的做法就是在得到框的概率分布后，取得每个分布的topk概率值，一般地，topk数值的和越大，那么这个分布就越集中，所对应的预测框就越明确。最后通过一堆全连接层提取特征以后得到一个由框边界分布而来的分数，将这个分数乘到分类分数上去得到最后的信度。</p>
+<p>以上的改进被证明对最后的预测结果比较明显的提升：<br>
+<img src="https://zye1996.github.io/post-images/1619034929494.png" alt="" loading="lazy"></p>
+<h2 id="引用">引用</h2>
+<p>GFL version 1: <img src="https://arxiv.org/pdf/2006.04388.pdf" alt="paper" loading="lazy"><br>
+GFL version 2: <img src="https://arxiv.org/pdf/2011.12885.pdf" alt="paper" loading="lazy"><br>
+GFL code: <img src="https://github.com/implus/GFocalV2" alt="codebase" loading="lazy"></p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://zye1996.github.io/post/duo-mo-tai-3d-mu-biao-shi-bie-imvotenet/">
+                  <h3 class="post-title">
+                    多模态3D目标识别论文-imVoteNet
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
