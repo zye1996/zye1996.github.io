@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://zye1996.github.io</id>
     <title>Magnetic Field</title>
-    <updated>2021-04-21T19:59:07.985Z</updated>
+    <updated>2021-04-21T20:22:02.081Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://zye1996.github.io"/>
     <link rel="self" href="https://zye1996.github.io/atom.xml"/>
@@ -15,7 +15,7 @@
         <id>https://zye1996.github.io/post/mu-biao-shi-bie-lun-wen-generalized-focal-loss/</id>
         <link href="https://zye1996.github.io/post/mu-biao-shi-bie-lun-wen-generalized-focal-loss/">
         </link>
-        <updated>2021-04-19T04:25:35.000Z</updated>
+        <updated>2021-04-18T16:25:35.000Z</updated>
         <content type="html"><![CDATA[<h2 id="导言">导言</h2>
 <p>Generalized Focal Loss (GFL) 是一种通过<strong>调整框本身和框质量（好坏）估计的表示，来提高模型学习效果</strong>的技术。最近这个方法也推出了v2的版本，这种思路总体上会比较轻量，不会给模型本身带来很多的overhead，非常不错。</p>
 <h2 id="motivation">Motivation</h2>
@@ -45,9 +45,9 @@
 <p>以上的改进被证明对最后的预测结果比较明显的提升：<br>
 <img src="https://zye1996.github.io/post-images/1619034929494.png" alt="" loading="lazy"></p>
 <h2 id="引用">引用</h2>
-<p>GFL version 1: <img src="https://arxiv.org/pdf/2006.04388.pdf" alt="paper" loading="lazy"><br>
-GFL version 2: <img src="https://arxiv.org/pdf/2011.12885.pdf" alt="paper" loading="lazy"><br>
-GFL code: <img src="https://github.com/implus/GFocalV2" alt="codebase" loading="lazy"></p>
+<p>GFL version 1: <a href="https://arxiv.org/pdf/2006.04388.pdf">paper</a><br>
+GFL version 2: <a href="https://arxiv.org/pdf/2011.12885.pdf">paper</a><br>
+GFL code: <a href="https://github.com/implus/GFocalV2">codebase</a></p>
 ]]></content>
     </entry>
     <entry>
